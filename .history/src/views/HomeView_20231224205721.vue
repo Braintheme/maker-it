@@ -1,0 +1,16 @@
+<script setup>
+import { ref, onMounted } from 'vue'
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '@/firebase'
+
+onMounted(() => {
+console.log('mounted');
+})
+
+
+console.log(db);
+</script>
+
+<template>
+  <div></div>
+</template>

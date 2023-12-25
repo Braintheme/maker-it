@@ -1,0 +1,39 @@
+<script setup>
+import { ref, onMounted } from 'vue'
+import { collection, onSnapshot } from 'firebase/firestore';
+import { db } from '@/firebase'
+
+const notes = ref([]);
+
+onMounted(() => {
+  onSnapshot(collection(db, 'notes'), (querySnapshot) => {
+    const fbNotes = [];
+    querySnapshot.forEach((doc) => {
+      fbNotes.push({
+        id: doc.id,
+        title: doc.data().title,
+        content: doc.data().content,
+        date: doc.data().date,
+      })
+    })
+    notes.value = fbNotes;
+  })
+})
+
+
+
+</script>
+
+<template>
+  <div class="container">
+    <div class="col-lg-3">
+      <div v-for="note in notes" :key="note.id" class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ note.title }}</h5>
+          <p class="card-text">{{ note.content }}</p>
+          <a href="#" class="btn btn-primary">Open</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
