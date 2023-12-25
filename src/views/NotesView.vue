@@ -1,45 +1,52 @@
-<script setup>
+<script>
 import { useCurrentUser } from '@/stores/UserStore'
 
 import CardNote from '@/components/notes/CardNote.vue'
 import AddNote from '@/components/notes/AddNote.vue'
 
-
-import { ref, onMounted, watch } from 'vue'
 import { collection, onSnapshot } from 'firebase/firestore';
 import { db } from '@/firebase'
 
-const store = useCurrentUser()
-const notes = ref([]);
-
-const notesCollectionRef = collection(db, 'notes', store.getUserId, 'userNotes');
-
-/* 
-Get Notes
-*/
-const getNotes = () => {
-  onSnapshot(notesCollectionRef, (querySnapshot) => {
-    const fbNotes = [];
-    querySnapshot.forEach((doc) => {
-      fbNotes.push({
-        id: doc.id,
-        title: doc.data().title,
-        content: doc.data().content,
-        date: doc.data().date,
+export default {
+  name: "NoteView",
+  props: ['note'],
+  components: {
+    CardNote,
+    AddNote
+  },
+  data() {
+    return {
+      currentUserId: null,
+      store: useCurrentUser(),
+      notes: []
+    };
+  },
+  mounted() {
+    this.currentUserId = this.store.getUserId;
+    this.getNotes()
+    this.store.setUserAuth()
+  },
+  methods: {
+    getNotes() {
+      onSnapshot(collection(db, 'notes', this.currentUserId, 'userNotes'), (querySnapshot) => {
+        const fbNotes = [];
+        querySnapshot.forEach((doc) => {
+          fbNotes.push({
+            id: doc.id,
+            title: doc.data().title,
+            content: doc.data().content,
+            date: doc.data().date,
+          })
+        })
+        this.reBuildMasonry()
+        this.notes = fbNotes.sort((a, b) => a.date - b.date).reverse();
       })
-    })
-    notes.value = fbNotes.sort((a, b) => a.date - b.date).reverse();
-  })
-}
-
-onMounted(() => {
-  store.setUserAuth()
-  getNotes()
-})
-
-watch(notes, () => {
-  // getNotes()
-})
+    },
+    reBuildMasonry() {
+      setTimeout(() => { this.$redrawVueMasonry() }, 100);
+    },
+  },
+};
 </script>
 
 <template>
