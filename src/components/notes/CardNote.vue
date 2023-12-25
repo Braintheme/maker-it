@@ -1,3 +1,35 @@
+
+<script>
+import { collection, doc, deleteDoc } from 'firebase/firestore';
+import { db } from '@/firebase';
+
+import { useCurrentUser } from '@/stores/UserStore'
+
+
+export default {
+  name: "App",
+  props: ['note'],
+  data() {
+    return {
+      store: useCurrentUser(),
+      currentUserId: ''
+    };
+  },
+  mounted() {
+    this.currentUserId = this.store.getUserId;
+  },
+  methods: {
+    deleteNote(id) {
+      deleteDoc(doc(collection(db, 'notes', this.currentUserId, 'userNotes'), id))
+      this.reBuildMasonry();
+    },
+    reBuildMasonry() {
+      setTimeout(() => { this.$redrawVueMasonry() }, 100);
+    },
+  },
+};
+</script>
+
 <template>
   <v-card color="#fffb56">
     <!-- <v-img src="https://picsum.photos/200/200" @load="this.$redrawVueMasonry()"></v-img> -->
@@ -10,31 +42,3 @@
     </v-card-actions>
   </v-card>
 </template>
-
-
-<script>
-import { collection, doc, deleteDoc } from 'firebase/firestore';
-import { db } from '@/firebase';
-
-export default {
-  name: "App",
-  props: ['note'],
-  data() {
-    return {};
-  },
-  mounted() {
-    // this.reBuild();
-  },
-  methods: {
-    deleteNote(id) {
-      deleteDoc(doc(collection(db, 'notes'), id))
-      this.reBuild();
-    },
-    reBuild() {
-      setTimeout(() => {
-        this.$redrawVueMasonry()
-      }, 100);;
-    },
-  },
-};
-</script>

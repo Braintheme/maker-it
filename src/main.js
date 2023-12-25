@@ -1,5 +1,5 @@
 import { createApp } from 'vue'
-
+import { createPinia } from 'pinia'
 
 import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
@@ -26,6 +26,7 @@ import router from './router'
 
 import '@/assets/scss/main.scss'
 
+const pinia = createPinia()
 const app = createApp(App)
 
 app.use(
@@ -42,6 +43,7 @@ app.use(createVuetify({
   // icons
 }))
 
+app.use(pinia)
 app.use(VueMasonryPlugin)
 app.use(router)
 

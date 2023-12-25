@@ -1,9 +1,10 @@
 <script setup>
 import { ref } from 'vue'
+import { useCurrentUser } from '@/stores/UserStore'
 import { collection, addDoc } from 'firebase/firestore';
 import { db } from '@/firebase'
 
-const notesCollectionRef = collection(db, 'notes');
+const store = useCurrentUser()
 
 const newNoteTitle = ref();
 const newNoteContent = ref();
@@ -14,9 +15,7 @@ let dialog = ref();
 Add note
 */
 const addNote = () => {
-  let date_now = new Date().getTime();
-  console.log(date_now);
-  addDoc(notesCollectionRef, {
+  addDoc(collection(db, 'notes', store.getUserId, 'userNotes'), {
     date: Date.now(),
     title: newNoteTitle.value,
     content: newNoteContent.value
@@ -53,7 +52,7 @@ const addNote = () => {
       <v-card>
         <v-toolbar dark color="primary">
           <v-btn icon dark @click="dialog = false">X</v-btn>
-          <v-toolbar-title>Note: {{newNoteTitle}}</v-toolbar-title>
+          <v-toolbar-title>Note: {{ newNoteTitle }}</v-toolbar-title>
           <!-- <v-spacer></v-spacer> -->
         </v-toolbar>
 
