@@ -2,7 +2,7 @@
   <v-card color="#fffb56">
     <!-- <v-img src="https://picsum.photos/200/200" @load="this.$redrawVueMasonry()"></v-img> -->
     <v-card-title>{{ note.title }}</v-card-title>
-    <v-card-subtitle>{{ note.date }}</v-card-subtitle>
+    <v-card-subtitle>{{ new Date(note.date) }}</v-card-subtitle>
     <v-card-text>{{ note.content }}</v-card-text>
     <v-card-actions>
       <v-btn @click="deleteNote(note.id)" variant="tonal">x</v-btn>
@@ -23,17 +23,16 @@ export default {
     return {};
   },
   mounted() {
-    // this.reBuild();
-  },
+    this.reBuild();
+    console.log(this.note.date)
+  },  
   methods: {
     deleteNote(id) {
       deleteDoc(doc(collection(db, 'notes'), id))
       this.reBuild();
     },
     reBuild() {
-      setTimeout(() => {
-        this.$redrawVueMasonry()
-      }, 100);;
+      this.$redrawVueMasonry(); 
     },
   },
 };

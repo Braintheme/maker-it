@@ -26,7 +26,7 @@ const getNotes = () => {
         date: doc.data().date,
       })
     })
-    notes.value = fbNotes.sort((a, b) => a.date - b.date).reverse();
+    notes.value = fbNotes.sort((a, b) => a.date + b.date);
   })
 }
 

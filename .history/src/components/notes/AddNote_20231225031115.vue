@@ -14,7 +14,7 @@ let dialog = ref();
 Add note
 */
 const addNote = () => {
-  let date_now = new Date().getTime();
+  let date_now = new Date.now();
   console.log(date_now);
   addDoc(notesCollectionRef, {
     date: Date.now(),
@@ -52,7 +52,9 @@ const addNote = () => {
       </template>
       <v-card>
         <v-toolbar dark color="primary">
-          <v-btn icon dark @click="dialog = false">X</v-btn>
+          <v-btn icon dark @click="dialog = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
           <v-toolbar-title>Note: {{newNoteTitle}}</v-toolbar-title>
           <!-- <v-spacer></v-spacer> -->
         </v-toolbar>

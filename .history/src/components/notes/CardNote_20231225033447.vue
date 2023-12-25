@@ -24,16 +24,14 @@ export default {
   },
   mounted() {
     // this.reBuild();
-  },
+  },  
   methods: {
     deleteNote(id) {
       deleteDoc(doc(collection(db, 'notes'), id))
       this.reBuild();
     },
     reBuild() {
-      setTimeout(() => {
-        this.$redrawVueMasonry()
-      }, 100);;
+      this.$redrawVueMasonry(); 
     },
   },
 };

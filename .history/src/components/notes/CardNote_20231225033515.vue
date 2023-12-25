@@ -33,7 +33,7 @@ export default {
     reBuild() {
       setTimeout(() => {
         this.$redrawVueMasonry()
-      }, 100);;
+      }, 700);;
     },
   },
 };

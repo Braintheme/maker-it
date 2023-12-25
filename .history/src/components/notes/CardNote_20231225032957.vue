@@ -23,17 +23,16 @@ export default {
     return {};
   },
   mounted() {
-    // this.reBuild();
-  },
+    this.reBuild();
+    console.log(this.note.date)
+  },  
   methods: {
     deleteNote(id) {
       deleteDoc(doc(collection(db, 'notes'), id))
       this.reBuild();
     },
     reBuild() {
-      setTimeout(() => {
-        this.$redrawVueMasonry()
-      }, 100);;
+      this.$redrawVueMasonry(); 
     },
   },
 };
