@@ -1,11 +1,11 @@
 <script>
+import { collection, onSnapshot } from 'firebase/firestore';
+import { db } from '@/firebase'
+
 import { useCurrentUser } from '@/stores/UserStore'
 
 import CardNote from '@/components/notes/CardNote.vue'
 import AddNote from '@/components/notes/AddNote.vue'
-
-import { collection, onSnapshot } from 'firebase/firestore';
-import { db } from '@/firebase'
 
 export default {
   name: "NoteView",
@@ -24,7 +24,6 @@ export default {
   mounted() {
     this.currentUserId = this.store.getUserId;
     this.getNotes()
-    this.store.setUserAuth()
   },
   methods: {
     getNotes() {
@@ -53,7 +52,7 @@ export default {
   <div style="position: relative; padding-bottom: 70px;">
     <v-container>
       <v-row v-masonry transition-duration="0.6s" transition-delay="0.5s" item-selector=".note">
-        <v-col v-masonry-tile class="note" v-for="note in notes" :key="note.id" cols="12" lg="2" sm="6" xl="1" md="4">
+        <v-col v-masonry-tile class="note" v-for="note in notes" :key="note.id" cols="6" lg="2" sm="6" xl="1" md="4">
           <CardNote :note="note" @noteDeleted="getNotes" />
         </v-col>
       </v-row>

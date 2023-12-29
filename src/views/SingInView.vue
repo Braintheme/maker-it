@@ -13,8 +13,9 @@ const signInWithGoogle = () => {
 </script>
 
 <template>
-  <h1>SignIn</h1>
-  <v-container>
-    <v-btn @click="signInWithGoogle" class="mt-2">Google</v-btn>
-  </v-container>
+  <div>
+    <v-container>
+      <v-btn @click="signInWithGoogle" class="mt-2">Google</v-btn>
+    </v-container>
+  </div>
 </template>

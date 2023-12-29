@@ -3,7 +3,7 @@
 </script>
 
 <template>
-  <div style="position: relative; padding-bottom: 70px;">
-   empty
-  </div>
+  <v-container>
+    <v-alert type="info" title="Home View" variant="tonal"></v-alert>
+  </v-container>
 </template>

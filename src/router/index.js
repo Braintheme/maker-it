@@ -14,11 +14,6 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/about',
-      name: 'about',
-      component: () => import('../views/AboutView.vue')
-    },
-    {
       path: '/notes',
       name: 'notes',
       component: () => import('../views/NotesView.vue'),
@@ -26,11 +21,11 @@ const router = createRouter({
         requiresAuth: true
       }
     },
-    {
-      path: '/sign-in',
-      name: 'sign-in',
-      component: () => import('../views/SingInView.vue')
-    }
+    // {
+    //   path: '/sign-in',
+    //   name: 'sign-in',
+    //   component: () => import('../views/SingInView.vue')
+    // }
   ]
 })
 
@@ -52,7 +47,7 @@ router.beforeEach(async (to, from, next )=> {
     if(await getCurrentUser()) {
       next()
     } else {
-      next('/sign-in')
+      next('/')
     }
   }else {
     next() 

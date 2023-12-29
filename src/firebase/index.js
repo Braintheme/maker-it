@@ -1,7 +1,8 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
+import { getAuth } from "firebase/auth"
 
-export const firebaseApp = initializeApp({
+const firebaseApp = initializeApp({
   apiKey: "AIzaSyCp7fAYiV7HDipDUMNODnjmEFUz_8Q2-lI",
   authDomain: "makerit.firebaseapp.com",
   databaseURL: "https://makerit.firebaseio.com",
@@ -13,9 +14,11 @@ export const firebaseApp = initializeApp({
 });
 
 // used for the firestore refs
-const db = getFirestore(firebaseApp)
+const db = getFirestore(firebaseApp);
+
+const auth = getAuth(firebaseApp);
 
 // here we can export reusable database references
 export {
-  db
+  db, auth, firebaseApp
 }

@@ -1,24 +1,23 @@
 <script setup>
+import { RouterView } from 'vue-router'
 import { useCurrentUser } from '@/stores/UserStore'
+import { onMounted, onBeforeMount } from 'vue'
+//Header
+import SiteHeader from '@/components/site/SiteHeader.vue'
+import SiteFooter from '@/components/site/SiteFooter.vue'
 
-import { RouterLink, RouterView , useRouter} from 'vue-router'
+const authStore = useCurrentUser();
 
-const store = useCurrentUser();
-const router = useRouter();
+onBeforeMount(()=> {
+  authStore.init()
+})
 
-store.setUserAuth()
-
-const hangleLogout = () => {
-  store.userLogout();
-  router.push('/sign-in')
-};
 </script>
  
 <template>
-  <nav>
-    <router-link to="/sign-in" v-if="!store.getUserLoggedIn">Sign In</router-link>
-    <router-link to="/notes">Notes</router-link>
-    <router-link @click="hangleLogout" v-if="store.getUserLoggedIn" to="/notes">Logout</router-link>
-  </nav>
-  <RouterView />
+  <div>
+    <SiteHeader />
+    <RouterView />
+    <!-- <SiteFooter /> -->
+  </div>
 </template>

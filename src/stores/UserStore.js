@@ -1,50 +1,60 @@
 import { defineStore } from "pinia";
-import { GoogleAuthProvider, signInWithPopup, getAuth, signOut, onAuthStateChanged } from 'firebase/auth';
+import { auth } from '@/firebase/index.js'
+import { GoogleAuthProvider, signInWithPopup, getAuth, signOut, onAuthStateChanged, initializeAuth } from 'firebase/auth';
 
 export const useCurrentUser = defineStore('CurrentUser', {
   state: () => {
     return {
+      loading: false,
       userId: null,
+      userInfo: null,
       isLoggedIn: false,
-      userInfo: null
+      user: JSON.parse(localStorage.getItem('user')),
     }
   },
   getters: {
     getUserId: (state) => state.userId,
     getUserLoggedIn: (state) => state.isLoggedIn,
-    getUserInfo: (state) => state.userInfo,
+    getUserInfo: (state) => state.isLoggedIn,
+    getUser: (state) => state.user ? state.user : state.userInfo,
   },
   actions: {
-    setUserId(id) {
-      this.userId = id;
+    setUserInfo(user) {
+      this.userId = user.uid;
+      this.userInfo = user;
+      this.isLoggedIn = true;
+      localStorage.setItem('user', JSON.stringify(user));
     },
-    setUserAuth() {
-      const userAuth = getAuth();
-      onAuthStateChanged(userAuth, (user) => {
-        if(user) {
-          this.userInfo = user;
-          this.userId = userAuth.currentUser.uid;
-          this.isLoggedIn = true;
-        }else {
+
+    init() {
+      auth.onAuthStateChanged(async user => {
+        if (user) {
+          this.setUserInfo(user);
+        } else {
           this.userId = null;
           this.isLoggedIn = false;
+          // localStorage.removeItem('user');
         }
       });
     },
-    userSignInWithGoogle() {
+
+    async userSignInWithGoogle() {
       const provider = new GoogleAuthProvider();
-      return signInWithPopup(getAuth(), provider)
-        .then(() => {
-          this.setUserAuth()     
-        })
-        .catch((error) => {
-          console.log(error);
-        })
+      try {
+        const signResponse = await signInWithPopup(auth, provider).then((date) => {
+          this.setUserInfo(date.user)
+        });
+        return signResponse;
+      } catch {
+        console.log('Error login');
+      }
     },
-    userLogout() {
-      return signOut(getAuth()).then(() => {
-        this.setUserAuth()
-      })
+
+    async userLogout() {
+      this.user = null;
+      this.userInfo = null;
+      localStorage.removeItem('user');
+      return await signOut(auth)
     }
   }
 })
