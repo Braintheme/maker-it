@@ -1,10 +1,8 @@
 <script setup>
 import { ref } from 'vue'
-import { useCurrentUser } from '@/stores/UserStore'
-import { collection, addDoc } from 'firebase/firestore';
-import { db } from '@/firebase'
+import { useNotesActions } from '@/stores/notes/NotesActionsStore'
 
-const store = useCurrentUser()
+const storeNotes = useNotesActions()
 
 const newNoteTitle = ref();
 const newNoteContent = ref();
@@ -15,7 +13,8 @@ let dialog = ref();
 Add note
 */
 const addNote = () => {
-  addDoc(collection(db, 'notes', store.getUserId, 'userNotes'), {
+
+  storeNotes.ADD_NOTE({
     date: Date.now(),
     title: newNoteTitle.value,
     content: newNoteContent.value
@@ -60,10 +59,3 @@ const addNote = () => {
     </v-bottom-navigation>
   </v-layout>
 </template>
-
-<style>
-.dialog-bottom-transition-enter-active,
-.dialog-bottom-transition-leave-active {
-  transition: transform .2s ease-in-out;
-}
-</style>

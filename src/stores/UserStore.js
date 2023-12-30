@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { auth } from '@/firebase/index.js'
-import { GoogleAuthProvider, signInWithPopup, getAuth, signOut, onAuthStateChanged, initializeAuth } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from 'firebase/auth';
 
 export const useCurrentUser = defineStore('CurrentUser', {
   state: () => {
@@ -27,7 +27,7 @@ export const useCurrentUser = defineStore('CurrentUser', {
     },
 
     init() {
-      auth.onAuthStateChanged(async user => {
+      return auth.onAuthStateChanged(async user => {
         if (user) {
           this.setUserInfo(user);
         } else {
