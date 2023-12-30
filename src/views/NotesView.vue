@@ -65,7 +65,7 @@ export default {
 <style>
 .dialog-bottom-transition-enter-active,
 .dialog-bottom-transition-leave-active {
-  transition: transform .2s ease-in-out;
+  transition: transform 8s ease-in-out;
 }
 </style>
 

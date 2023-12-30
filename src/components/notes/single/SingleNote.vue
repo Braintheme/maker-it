@@ -41,7 +41,7 @@ export default {
   methods: {
     closeDialog() {
       this.dialog = false;
-      
+
       setTimeout(() => {
         this.noteSingleStore.CLEAR_SINGLE_NOTE()
       }, 100);
@@ -60,7 +60,6 @@ export default {
 };
 
 </script>
-
 
 <template>
   <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition">
