@@ -1,4 +1,3 @@
-
 <script>
 import { useCurrentUser } from '@/stores/UserStore'
 import { useNotesActions } from '@/stores/notes/NotesActionsStore'
@@ -93,7 +92,7 @@ export default {
       </v-toolbar-items>
     </v-toolbar>
     <!-- <v-card-subtitle>{{ note.date }}</v-card-subtitle> -->
-    <v-card-text>{{ note.content }}</v-card-text>
+    <v-card-text v-html="note.content"></v-card-text>
 
   </v-card>
 </template>

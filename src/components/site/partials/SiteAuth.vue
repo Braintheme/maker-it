@@ -47,6 +47,9 @@ const hangleLogout = async () => {
           <p class="text-caption mt-1">
             {{ authUser.email }}
           </p>
+          <p class="text-caption mt-1">
+            {{ authUser.uid }} 
+          </p>
           <v-divider class="my-3"></v-divider>
           <v-btn rounded variant="text" @click="hangleLogout">
             <v-icon icon="mdi-export" /> Logout

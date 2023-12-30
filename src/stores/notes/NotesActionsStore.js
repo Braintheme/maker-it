@@ -1,32 +1,38 @@
 import { defineStore } from "pinia";
 
 import { useCurrentUser } from '@/stores/UserStore'
+import { useNoteSingle } from '@/stores/notes/NoteSingle'
 
-import { collection, addDoc, deleteDoc, doc } from 'firebase/firestore';
+import { collection, addDoc, deleteDoc, updateDoc, doc } from 'firebase/firestore';
 import { db } from '@/firebase'
 
 export const useNotesActions = defineStore('NotesActions', {
   state: () => {
     return {
       currentUset: useCurrentUser,
+      // editedNoteId: useNoteSingle().getSingleNoteID,
     }
   },
   getters: {
-    getUserId: () =>  {
+    getUserId: () => {
       return useCurrentUser().userId
+    },
+    getSingleNoteID: () => {
+      return useNoteSingle().getSingleNoteID
     },
   },
   actions: {
-    UPDATE_NOTE() {
-
-    },
-    
-    DELETE_NOTE(id) {
-      deleteDoc(doc(collection(db, 'notes', this.getUserId, 'userNotes'), id))
+    async UPDATE_NOTE(obj) {
+      // console.log(useNoteSingle().getSingleNoteID, this.getUserId);
+      await updateDoc(doc(db, "notes", this.getUserId, 'userNotes',useNoteSingle().getSingleNoteID), obj);
     },
 
-    ADD_NOTE(obj) {
-      addDoc(collection(db, 'notes', this.getUserId, 'userNotes'), obj)
+    async DELETE_NOTE(id) {
+      await deleteDoc(doc(collection(db, 'notes', this.getUserId, 'userNotes'), id))
+    },
+
+    async ADD_NOTE(obj) {
+      await addDoc(collection(db, 'notes', this.getUserId, 'userNotes'), obj)
     }
   }
 })

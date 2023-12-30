@@ -7,6 +7,11 @@ import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
 import { aliases, mdi } from 'vuetify/iconsets/mdi'
 
+
+
+// import { QuillEditor } from '@vueup/vue-quill'
+// import Quill from "quill";
+
 import '@mdi/font/css/materialdesignicons.css'
 const icons = {
   defaultSet: 'mdi',
@@ -29,6 +34,9 @@ import '@/assets/scss/main.scss'
 const pinia = createPinia()
 const app = createApp(App)
 
+
+// app.component('QuillEditor', QuillEditor)
+
 app.use(
   VueFire, {
   firebaseApp,
@@ -46,6 +54,7 @@ app.use(createVuetify({
 app.use(pinia)
 app.use(VueMasonryPlugin)
 app.use(router)
+
 
 
 app.mount('#app')

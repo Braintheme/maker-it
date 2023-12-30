@@ -15,7 +15,14 @@ Add note
 const addNote = () => {
 
   storeNotes.ADD_NOTE({
-    date: Date.now(),
+    created_date: Date.now(),
+    color_index: 0,
+    encrypted: 0,
+    revision: 0,
+    tags: '',
+    archived: false,
+    done: false,
+    modified_date: null,
     title: newNoteTitle.value,
     content: newNoteContent.value
   })
