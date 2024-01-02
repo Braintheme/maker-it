@@ -32,7 +32,7 @@ export const useNotesActions = defineStore('NotesActions', {
     },
 
     async ADD_NOTE(obj) {
-      await addDoc(collection(db, 'notes', this.getUserId, 'userNotes'), obj)
+      return await addDoc(collection(db, 'notes', this.getUserId, 'userNotes'), obj)
     }
   }
 })

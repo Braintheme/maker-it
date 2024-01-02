@@ -9,6 +9,7 @@ import { useNoteSingle } from '@/stores/notes/NoteSingle'
 import CardNote from '@/components/notes/card/CardNote.vue'
 import SingleNote from '@/components/notes/single/SingleNote.vue'
 import AddNote from '@/components/notes/AddNote.vue'
+import AddNoteChoose from '@/components/notes/addNote/AddNoteChoose.vue'
 
 export default {
   name: "NoteView",
@@ -16,6 +17,7 @@ export default {
   components: {
     CardNote,
     AddNote,
+    AddNoteChoose,
     SingleNote
   },
   data() {
@@ -84,6 +86,7 @@ export default {
     <SingleNote v-if="storeNoteSingle.getSingleNoteID && storeNoteSingle.getSingleNote"/>
 
     <!-- Add Note  -->
-    <AddNote />
+    <AddNoteChoose />
+    <!-- <AddNote /> -->
   </div>
 </template>

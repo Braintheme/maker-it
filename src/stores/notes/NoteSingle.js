@@ -10,6 +10,12 @@ export const useNoteSingle = defineStore('NoteSingle', {
       currentUset: useCurrentUser,
       singleNote: null,
       singleNoteId: null,
+
+      initAddNewNote: {
+        addingNote: false,
+        addingNoteType: null,
+        addingNoteStayOnSingle: false
+      }
     }
   },
   getters: {
@@ -22,6 +28,7 @@ export const useNoteSingle = defineStore('NoteSingle', {
     getSingleNote: (state) => {
       return state.singleNote;
     },
+    getAddingNewNote: (state) => state.initAddNewNote
   },
   actions: {
     CLEAR_SINGLE_NOTE() {
@@ -37,5 +44,17 @@ export const useNoteSingle = defineStore('NoteSingle', {
 
       this.singleNote = docSnap.data()
     },
+
+    INIT_ADD_NEW_NOTE(type) {
+      this.initAddNewNote.addingNote = true;
+      this.initAddNewNote.addingNoteStayOnSingle = true;
+      this.initAddNewNote.addingNoteType = type;
+    },
+
+    RESET_ADD_NEW_NOTE(type) {
+      this.initAddNewNote.addingNote = false;
+      this.initAddNewNote.addingNoteStayOnSingle = (type) ? true : false;
+      this.initAddNewNote.addingNoteType = null;
+    }
   }
 })

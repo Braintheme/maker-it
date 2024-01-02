@@ -49,7 +49,7 @@ export default {
 </style>
 
 <template>
-  <v-card color="#fffb56">
+  <v-card>
 
     <v-toolbar density="compact" height="auto" class="card-note--toolbar">
 
